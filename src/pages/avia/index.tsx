@@ -1,9 +1,8 @@
-import moment from "moment";
 import type { NextPage } from "next";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import DateInput from "../../components/DateInput";
 
 import {
   selectData,
@@ -13,16 +12,10 @@ import {
   setToWhere,
   validateForm,
 } from "../../store/flightStore";
-import { formatDate, validateDate } from "../../utils/dateValidate";
 
 const AviaPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  // Обратная дата
-  const backDateRef = useRef<HTMLInputElement>(null);
-  // Туда дата
-  const thereDateRef = useRef<HTMLInputElement>(null);
 
   const { toWhere, fromWhere, isSubmittable, backDate, thereDate } =
     useSelector(selectData);
@@ -34,19 +27,6 @@ const AviaPage: NextPage = () => {
   useEffect(() => {
     dispatch(validateForm());
   }, [backDate, thereDate, fromWhere, toWhere, dispatch]);
-
-  const handleDateInput = (dateType: string) => {
-    if (dateType === "back") {
-      const inputBackDateRef = backDateRef.current?.value;
-      if (inputBackDateRef && inputBackDateRef !== null) {
-        dispatch(setBackDate(inputBackDateRef));
-      }
-    }
-    const inputThereDateRef = thereDateRef.current?.value;
-    if (inputThereDateRef && inputThereDateRef !== null) {
-      dispatch(setThereDate(inputThereDateRef));
-    }
-  };
 
   return (
     <div className="mx-autow-[600px] md:w-[962px]">
@@ -69,78 +49,16 @@ const AviaPage: NextPage = () => {
             onChange={(e) => dispatch(setToWhere(e.target.value))}
           />
         </div>
-        <div className="input_wrap">
-          <label className="text-[13px] text-white">Туда</label>
-          <div className="relative flex flex-row items-center">
-            <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
-              <input
-                ref={thereDateRef}
-                onChange={() => handleDateInput("there")}
-                type="date"
-                className={`pointer-events-auto absolute left-[-2.3rem] h-14 w-14 cursor-pointer bg-transparent opacity-0 focus:outline-none`}
-              />
-              {validateDate(thereDate) ? (
-                <Image
-                  className="pointer-events:none cursor-pointer"
-                  src={"/calendar-blue.png"}
-                  width={16}
-                  height={16}
-                  alt="calendar-icon"
-                ></Image>
-              ) : (
-                <Image
-                  className="pointer-events:none cursor-pointer"
-                  src={"/calendar-black.png"}
-                  width={16}
-                  height={16}
-                  alt="calendar-icon"
-                ></Image>
-              )}
-            </span>
-            <input
-              className="input_date"
-              placeholder="дд.мм.гг"
-              value={thereDate && formatDate(thereDate)}
-              onChange={(e) => dispatch(setThereDate(e.currentTarget.value))}
-            />
-          </div>
-        </div>
-        <div className="input_wrap">
-          <label className="text-[13px] text-white">Обратно</label>
-          <div className="relative flex flex-row items-center">
-            <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
-              <input
-                ref={backDateRef}
-                onChange={() => handleDateInput("back")}
-                type="date"
-                className={`pointer-events-auto absolute left-[-2.3rem]  h-14 w-14 cursor-pointer bg-transparent opacity-0 focus:outline-none`}
-              />
-              {validateDate(backDate) ? (
-                <Image
-                  className="pointer-events:none cursor-pointer"
-                  src={"/calendar-blue.png"}
-                  width={16}
-                  height={16}
-                  alt="calendar-icon"
-                ></Image>
-              ) : (
-                <Image
-                  className="pointer-events:none cursor-pointer"
-                  src={"/calendar-black.png"}
-                  width={16}
-                  height={16}
-                  alt="calendar-icon"
-                ></Image>
-              )}
-            </span>
-            <input
-              className="input_date"
-              placeholder="дд.мм.гг"
-              value={backDate && formatDate(backDate)}
-              onChange={(e) => dispatch(setBackDate(e.currentTarget.value))}
-            />
-          </div>
-        </div>
+        <DateInput
+          title="Туда"
+          date={thereDate}
+          dispathType={setThereDate}
+        ></DateInput>
+        <DateInput
+          title="Обратно"
+          date={backDate}
+          dispathType={setBackDate}
+        ></DateInput>
       </div>
       <div className="flex w-full items-center justify-end rounded-b-xl rounded-br-xl bg-white  px-[29px] py-[23px] text-white drop-shadow-md">
         <button
