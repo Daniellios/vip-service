@@ -5,5 +5,11 @@ export const validateDate = (date: string) => {
 };
 
 export const formatDate = (date: string) => {
-  return moment(date).format("DD.MM.YYYY");
+  if (date) {
+    const resDate = moment(date).format("DD.MM.YYYY");
+    if (resDate === "Invalid date") return "";
+    return resDate;
+  } else {
+    return "";
+  }
 };

@@ -40,23 +40,18 @@ const AviaPage: NextPage = () => {
       const inputBackDateRef = backDateRef.current?.value;
       if (inputBackDateRef && inputBackDateRef !== null) {
         dispatch(setBackDate(inputBackDateRef));
-        console.log(backDate);
-      }
-    } else {
-      const inputThereDateRef = thereDateRef.current?.value;
-      if (inputThereDateRef && inputThereDateRef !== null) {
-        dispatch(setThereDate(inputThereDateRef));
-        console.log(backDate);
       }
     }
+    const inputThereDateRef = thereDateRef.current?.value;
+    if (inputThereDateRef && inputThereDateRef !== null) {
+      dispatch(setThereDate(inputThereDateRef));
+    }
   };
-
-  console.log(isSubmittable);
 
   return (
     <div className="mx-autow-[600px] md:w-[962px]">
       <div className="flex  flex-col justify-between gap-2 rounded-t-[15px] bg-[#5C87DB] p-[30px] pt-[17px] md:flex-row ">
-        <div className="flex flex-col gap-1 ">
+        <div className="input_wrap ">
           <label className="text-[13px] text-white">Откуда</label>
           <input
             className="input"
@@ -65,7 +60,7 @@ const AviaPage: NextPage = () => {
             onChange={(e) => dispatch(setFromWhere(e.target.value))}
           />
         </div>
-        <div className="flex flex-col gap-1 ">
+        <div className="input_wrap ">
           <label className="text-[13px] text-white">Куда</label>
           <input
             className="input"
@@ -74,7 +69,7 @@ const AviaPage: NextPage = () => {
             onChange={(e) => dispatch(setToWhere(e.target.value))}
           />
         </div>
-        <div className="flex flex-col gap-1 ">
+        <div className="input_wrap">
           <label className="text-[13px] text-white">Туда</label>
           <div className="relative flex flex-row items-center">
             <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
@@ -106,11 +101,11 @@ const AviaPage: NextPage = () => {
               className="input_date"
               placeholder="дд.мм.гг"
               value={thereDate && formatDate(thereDate)}
-              onChange={() => handleDateInput("there")}
+              onChange={(e) => dispatch(setThereDate(e.currentTarget.value))}
             />
           </div>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="input_wrap">
           <label className="text-[13px] text-white">Обратно</label>
           <div className="relative flex flex-row items-center">
             <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
@@ -142,7 +137,7 @@ const AviaPage: NextPage = () => {
               className="input_date"
               placeholder="дд.мм.гг"
               value={backDate && formatDate(backDate)}
-              onChange={() => handleDateInput("back")}
+              onChange={(e) => dispatch(setBackDate(e.currentTarget.value))}
             />
           </div>
         </div>

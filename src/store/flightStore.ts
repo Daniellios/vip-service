@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
 import type { IFlightOption, ITicket } from "../interfaces/interfaces";
-import { validateDate } from "../utils/dateValidate";
+import { formatDate, validateDate } from "../utils/dateValidate";
 
 const initialState: ITicket = {
   isSubmittable: false,

@@ -51,10 +51,10 @@ export const Ticket: FC<ITicketProps> = ({ flightRoute }) => {
       >
         <div className="flex h-full flex-row justify-between">
           <div className="mt-[41px] mr-[10px] w-[100px] whitespace-nowrap">
-            <p className="mb-[8px] text-[24px] font-bold leading-[24px] text-[#232323]">
+            <p className="mb-2 text-[24px] font-bold leading-[24px] text-[#232323]">
               {activeTime?.start}
             </p>
-            <p className="text-[14px] font-medium leading-[14px] text-[#5C5C5C]">
+            <p className="city">
               {flightRoute === "from" ? fromWhere : toWhere}
             </p>
             <p className="text-[14px] leading-[14px] text-[#5C5C5C]">
@@ -69,16 +69,16 @@ export const Ticket: FC<ITicketProps> = ({ flightRoute }) => {
               <Line />
             </div>
           ) : (
-            <div className="mirror_flip  mt-8 self-center">
+            <div className="mt-8 self-center">
               <FlipLine />
             </div>
           )}
 
           <div className="mt-[41px] ml-10 mr-[33px] w-[100px] whitespace-nowrap">
-            <p className="mb-[8px] text-[24px] font-bold leading-[24px] text-[#232323]">
+            <p className="mb-2 text-[24px] font-bold leading-[24px] text-[#232323]">
               {activeTime?.end}
             </p>
-            <p className="text-[14px] font-medium leading-[14px] text-[#5C5C5C]">
+            <p className="city">
               {flightRoute === "back" ? fromWhere : toWhere}
             </p>
             <p className="text-[14px] leading-[14px] text-[#5C5C5C]">
