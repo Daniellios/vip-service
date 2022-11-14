@@ -4,15 +4,11 @@
 
 @layer components {
   .input {
-    @apply w-[208px] rounded-[10px] p-[12px] text-[14px] font-bold focus:outline-none;
+    @apply w-full rounded-[10px] p-[12px] text-[14px] font-bold focus:outline-none md:w-[208px];
   }
 
   .input_date {
-    @apply w-[208px] rounded-[10px] p-[12px] pl-10 text-[14px] font-bold focus:outline-none;
-  }
-
-  .input_date_test {
-    @apply border-gray w-fullplaceholder:font-bold placeholder:text-gray block rounded-xl border-[1px] py-2 pl-8  pr-4 font-bold outline-none transition-all duration-200;
+    @apply w-full rounded-[10px] p-[12px] pl-10 text-[14px] font-bold focus:outline-none md:w-[208px];
   }
 
   .input_error {

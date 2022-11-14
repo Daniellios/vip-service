@@ -1,31 +1,22 @@
-import moment from "moment";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import type { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Bagage from "./SVGs/bagage";
-import Scheme from "./SVGs/Line";
 import { changeTicketTime, selectData } from "../store/flightStore";
-import { validateDate } from "../utils/dateValidate";
-import Line from "./SVGs/Line";
+import { formatDate, validateDate } from "../utils/dateValidate";
+import { Line, FlipLine } from "./SVGs/Line";
+import type { IFlightOption } from "../interfaces/interfaces";
 
 interface ITicketProps {
-  direction: string;
+  flightRoute: string;
 }
 
-export const Ticket: FC<ITicketProps> = ({ direction }) => {
-  const router = useRouter();
-  const {
-    fromWhere,
-    toWhere,
-    backDate,
-    thereDate,
-    isSubmittable,
-    fligthOptions,
-  } = useSelector(selectData);
+export const Ticket: FC<ITicketProps> = ({ flightRoute }) => {
+  const { fromWhere, toWhere, backDate, thereDate, fligthOptions } =
+    useSelector(selectData);
   const activeTime = fligthOptions.find((el) => el.isSelected);
 
-  console.log(direction);
+  console.log(flightRoute);
 
   const dispatch = useDispatch();
 
@@ -33,7 +24,7 @@ export const Ticket: FC<ITicketProps> = ({ direction }) => {
 
   return (
     <div
-      className={`flex flex-row justify-between ${
+      className={`flex flex-row items-center justify-between ${
         validateDate(backDate) ? "pb-[40px]" : ""
       }`}
     >
@@ -55,7 +46,7 @@ export const Ticket: FC<ITicketProps> = ({ direction }) => {
 
       <div
         className={`flex flex-col pr-[20px] pl-[25px] ${
-          direction === "back" ? "border-t border-dashed border-[#5C87DB]" : 0
+          flightRoute === "back" ? "border-t border-dashed border-[#5C87DB]" : 0
         }`}
       >
         <div className="flex h-full flex-row justify-between">
@@ -64,47 +55,50 @@ export const Ticket: FC<ITicketProps> = ({ direction }) => {
               {activeTime?.start}
             </p>
             <p className="text-[14px] font-medium leading-[14px] text-[#5C5C5C]">
-              {direction === "from" ? fromWhere : toWhere}
+              {flightRoute === "from" ? fromWhere : toWhere}
             </p>
             <p className="text-[14px] leading-[14px] text-[#5C5C5C]">
-              {direction === "from"
-                ? moment(thereDate).format("DD.MM.YYYY")
-                : moment(backDate).format("DD.MM.YYYY")}
+              {flightRoute === "from"
+                ? formatDate(thereDate)
+                : formatDate(backDate)}
             </p>
           </div>
 
-          <div className="mt-[32px]">
-            <Line />
-          </div>
+          {flightRoute === "from" ? (
+            <div className="mt-8 self-center">
+              <Line />
+            </div>
+          ) : (
+            <div className="mirror_flip  mt-8 self-center">
+              <FlipLine />
+            </div>
+          )}
 
-          <div className="mt-[41px] ml-[40px] mr-[33px] w-[100px] whitespace-nowrap">
+          <div className="mt-[41px] ml-10 mr-[33px] w-[100px] whitespace-nowrap">
             <p className="mb-[8px] text-[24px] font-bold leading-[24px] text-[#232323]">
               {activeTime?.end}
             </p>
             <p className="text-[14px] font-medium leading-[14px] text-[#5C5C5C]">
-              {direction === "back" ? fromWhere : toWhere}
+              {flightRoute === "back" ? fromWhere : toWhere}
             </p>
             <p className="text-[14px] leading-[14px] text-[#5C5C5C]">
-              {direction === "back"
-                ? moment(backDate).format("DD.MM.YYYY")
-                : moment(thereDate).format("DD.MM.YYYY")}
+              {flightRoute === "back"
+                ? formatDate(backDate)
+                : formatDate(thereDate)}
             </p>
           </div>
-
-          <div>
-            <Bagage />
-          </div>
+          <Bagage />
         </div>
         {!validateDate(backDate) && (
           <div className="mb-[27px] mt-[24px] flex flex-row">
-            {fligthOptions.map((item) => {
+            {fligthOptions.map((item: IFlightOption) => {
               return (
                 <div
-                  className={`mr-[20px] mt-auto h-min cursor-pointer rounded-[10px] font-medium 
+                  className={`mr-[20px] mt-auto h-min cursor-pointer rounded-[10px] font-medium transition-all
                     ${
                       item.isSelected
-                        ? "bg-[#DDE3EE] py-[9px] pl-[15px] pr-[18px] text-black"
-                        : "border border-[#B7BAC1] py-[3px] pr-[7px] pl-[3px] text-[#5C5C5C]"
+                        ? "border bg-[#DDE3EE] py-[9px] pl-[15px] pr-[18px] text-black"
+                        : "border border-[#B7BAC1] py-[9px] pl-[15px] pr-[18px] text-[#5C5C5C]"
                     }`}
                   onClick={() => dispatch(changeTicketTime(item.id))}
                   key={item.id}

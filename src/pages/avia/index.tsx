@@ -13,7 +13,7 @@ import {
   setToWhere,
   validateForm,
 } from "../../store/flightStore";
-import { validateDate } from "../../utils/dateValidate";
+import { formatDate, validateDate } from "../../utils/dateValidate";
 
 const AviaPage: NextPage = () => {
   const router = useRouter();
@@ -52,9 +52,9 @@ const AviaPage: NextPage = () => {
   console.log(isSubmittable);
 
   return (
-    <div className="mx-auto w-[962px] ">
+    <div className="mx-autow-[600px] md:w-[962px]">
       {/*FORM */}
-      <div className="flex flex-row justify-between rounded-t-[15px] bg-[#5C87DB] p-[30px] pt-[17px]">
+      <div className="flex  flex-col justify-between gap-2 rounded-t-[15px] bg-[#5C87DB] p-[30px] pt-[17px] md:flex-row ">
         <div className="flex flex-col gap-1 ">
           <label className="text-[13px] text-white">Откуда</label>
           <input
@@ -76,12 +76,12 @@ const AviaPage: NextPage = () => {
         <div className="flex flex-col gap-1 ">
           <label className="text-[13px] text-white">Туда</label>
           <div className="relative flex flex-row items-center">
-            <span className="pointer-events-none absolute top-[14px] left-[12px] flex items-center justify-center bg-white">
+            <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
               <input
                 ref={thereDateRef}
                 onChange={handleTehereDate}
                 type="date"
-                className={`pointer-events-auto absolute left-[-2.3rem]  h-14 w-14 cursor-pointer bg-transparent opacity-0 focus:outline-none`}
+                className={`pointer-events-auto absolute left-[-2.3rem] h-14 w-14 cursor-pointer bg-transparent opacity-0 focus:outline-none`}
               />
               {validateDate(thereDate) ? (
                 <Image
@@ -104,15 +104,15 @@ const AviaPage: NextPage = () => {
             <input
               className="input_date"
               placeholder="дд.мм.гг"
-              value={thereDate && moment(thereDate).format("DD.MM.YYYY")}
+              value={thereDate && formatDate(thereDate)}
               onChange={handleTehereDate}
             />
           </div>
         </div>
-        <div className="flex flex-col gap-1 ">
+        <div className="flex flex-col gap-1">
           <label className="text-[13px] text-white">Обратно</label>
           <div className="relative flex flex-row items-center">
-            <span className="pointer-events-none absolute top-[14px] left-[12px] flex items-center justify-center bg-white">
+            <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
               <input
                 ref={backDateRef}
                 onChange={handleBackDate}
@@ -140,7 +140,7 @@ const AviaPage: NextPage = () => {
             <input
               className="input_date"
               placeholder="дд.мм.гг"
-              value={backDate && moment(backDate).format("DD.MM.YYYY")}
+              value={backDate && formatDate(backDate)}
               onChange={handleBackDate}
             />
           </div>
