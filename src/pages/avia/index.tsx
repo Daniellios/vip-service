@@ -19,7 +19,9 @@ const AviaPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  // Обратная дата
   const backDateRef = useRef<HTMLInputElement>(null);
+  // Туда дата
   const thereDateRef = useRef<HTMLInputElement>(null);
 
   const { toWhere, fromWhere, isSubmittable, backDate, thereDate } =
@@ -33,19 +35,19 @@ const AviaPage: NextPage = () => {
     dispatch(validateForm());
   }, [backDate, thereDate, fromWhere, toWhere, dispatch]);
 
-  const handleBackDate = () => {
-    const inputBackDateRef = backDateRef.current?.value;
-    if (inputBackDateRef && inputBackDateRef !== null) {
-      dispatch(setBackDate(inputBackDateRef));
-      console.log(backDate);
-    }
-  };
-
-  const handleTehereDate = () => {
-    const inputThereDateRef = thereDateRef.current?.value;
-    if (inputThereDateRef && inputThereDateRef !== null) {
-      dispatch(setThereDate(inputThereDateRef));
-      console.log(backDate);
+  const handleDateInput = (dateType: string) => {
+    if (dateType === "back") {
+      const inputBackDateRef = backDateRef.current?.value;
+      if (inputBackDateRef && inputBackDateRef !== null) {
+        dispatch(setBackDate(inputBackDateRef));
+        console.log(backDate);
+      }
+    } else {
+      const inputThereDateRef = thereDateRef.current?.value;
+      if (inputThereDateRef && inputThereDateRef !== null) {
+        dispatch(setThereDate(inputThereDateRef));
+        console.log(backDate);
+      }
     }
   };
 
@@ -53,7 +55,6 @@ const AviaPage: NextPage = () => {
 
   return (
     <div className="mx-autow-[600px] md:w-[962px]">
-      {/*FORM */}
       <div className="flex  flex-col justify-between gap-2 rounded-t-[15px] bg-[#5C87DB] p-[30px] pt-[17px] md:flex-row ">
         <div className="flex flex-col gap-1 ">
           <label className="text-[13px] text-white">Откуда</label>
@@ -79,7 +80,7 @@ const AviaPage: NextPage = () => {
             <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
               <input
                 ref={thereDateRef}
-                onChange={handleTehereDate}
+                onChange={() => handleDateInput("there")}
                 type="date"
                 className={`pointer-events-auto absolute left-[-2.3rem] h-14 w-14 cursor-pointer bg-transparent opacity-0 focus:outline-none`}
               />
@@ -105,7 +106,7 @@ const AviaPage: NextPage = () => {
               className="input_date"
               placeholder="дд.мм.гг"
               value={thereDate && formatDate(thereDate)}
-              onChange={handleTehereDate}
+              onChange={() => handleDateInput("there")}
             />
           </div>
         </div>
@@ -115,7 +116,7 @@ const AviaPage: NextPage = () => {
             <span className="pointer-events-none absolute top-[14px] left-3 flex items-center justify-center bg-white">
               <input
                 ref={backDateRef}
-                onChange={handleBackDate}
+                onChange={() => handleDateInput("back")}
                 type="date"
                 className={`pointer-events-auto absolute left-[-2.3rem]  h-14 w-14 cursor-pointer bg-transparent opacity-0 focus:outline-none`}
               />
@@ -141,7 +142,7 @@ const AviaPage: NextPage = () => {
               className="input_date"
               placeholder="дд.мм.гг"
               value={backDate && formatDate(backDate)}
-              onChange={handleBackDate}
+              onChange={() => handleDateInput("back")}
             />
           </div>
         </div>
