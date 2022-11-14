@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input {
+    @apply w-[208px] rounded-[10px] p-[12px] text-[14px] font-bold focus:outline-none;
+  }
+
+  .input_date {
+    @apply w-[208px] rounded-[10px] p-[12px] pl-10 text-[14px] font-bold focus:outline-none;
+  }
+
+  .input_date_test {
+    @apply border-gray w-fullplaceholder:font-bold placeholder:text-gray block rounded-xl border-[1px] py-2 pl-8  pr-4 font-bold outline-none transition-all duration-200;
+  }
+
+  .input_error {
+    @apply border-[1px] border-red-500 focus:border-[1px] focus:border-red-500;
+  }
+
+  .input_wrap {
+    @apply flex flex-col justify-start gap-1;
+  }
+}
