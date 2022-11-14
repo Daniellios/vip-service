@@ -6,4 +6,5 @@
 
 - npm run dev
 
-# Сайт
+# Стэк
+React, Typescript, Redux Toolkit, Next.js, Tailwind,  
